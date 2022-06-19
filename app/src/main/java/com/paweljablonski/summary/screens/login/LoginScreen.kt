@@ -42,11 +42,9 @@ fun LoginScreen(
 
     Surface(modifier = Modifier.fillMaxSize()) {
 
-
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top) {
             SummaryLogo()
-
             if (showLoginForm.value) UserForm(loading = false, isCreateAccount = false){ email, password ->
                 viewModel.signInWithEmailAndPassword(email, password) {
                     navController.navigate(SummaryScreens.HomeScreen.name)
@@ -58,11 +56,11 @@ fun LoginScreen(
                         navController.navigate(SummaryScreens.HomeScreen.name)
                     }
                 }
-            }
+
+                }
         }
         UserSignUp(showLoginForm)
     }
-
 }
 
 @Composable
