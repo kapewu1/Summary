@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Summary</string>
+    <string name="create_acct">Please enter email and password</string>
+</resources>

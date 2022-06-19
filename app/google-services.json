@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "672026471264",
+    "project_id": "summary-adc09",
+    "storage_bucket": "summary-adc09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672026471264:android:b2c7e04743a51cd0358c05",
+        "android_client_info": {
+          "package_name": "com.paweljablonski.summary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672026471264-m8msl2dnfi0p3fbnal9ahpa0e76e4a2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_3EAZ4BUOyVyTols0yofqyLhlJ8Ijb-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672026471264-m8msl2dnfi0p3fbnal9ahpa0e76e4a2b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
