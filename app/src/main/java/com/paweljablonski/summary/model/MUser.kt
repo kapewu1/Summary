@@ -6,8 +6,8 @@ data class MUser(
     val displayName:String,
     val avatarUrl: String,
     val bio: String,
-    val groupLabel: String,
-    val groupId: String
+    val groupId: String,
+    val groupLabel: String
 ){
     fun toMap() : MutableMap<String, Any>{
         return mutableMapOf(
