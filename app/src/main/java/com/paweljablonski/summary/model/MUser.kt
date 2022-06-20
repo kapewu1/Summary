@@ -6,18 +6,30 @@ data class MUser(
     val displayName:String,
     val avatarUrl: String,
     val bio: String,
-    val groupId: String,
-    val groupLabel: String
+    var department: MDepartment? = null
 ){
     fun toMap() : MutableMap<String, Any>{
         return mutableMapOf(
             "user_id" to this.userId,
             "display_name" to this.displayName,
             "bio" to this.bio,
-            "group_label" to groupLabel,
-            "group_id" to groupId,
+//            "group_label" to department!!.groupLabel,
+//            "group_id" to department!!.groupId,
             "avatar_url" to avatarUrl
 
         )
     }
+
+//    fun toUser(map: MutableMap<String, Any>): MUser{
+//        return MUser(
+//            map["user_id"].toString(),
+//            map["display_name"].toString(),
+//            map["avatarUrl"].toString(),
+//            map["bio"].toString(),
+//            map["department"].toString(),
+//            map["user_id"].toString(),
+//
+//
+//        )
+//    }
 }

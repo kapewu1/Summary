@@ -47,8 +47,7 @@ class LoginScreenViewModel: ViewModel() {
             displayName = "Tester1",
             bio = "Lorem ipsum dksdkakdasmaskdaskdmk",
             avatarUrl = "https://www.firebase.com/dsdaw2d2aaa",
-            groupId = "423",
-            groupLabel = "HR",
+            department = null,
             id = null
         ).toMap()
 
