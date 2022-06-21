@@ -5,6 +5,7 @@ enum class SummaryScreens {
     HomeScreen,
     SearchScreen,
     StatsScreen,
+    UserScreen,
     LoginScreen;
 
     companion object {
@@ -15,6 +16,7 @@ enum class SummaryScreens {
             SearchScreen.name -> SearchScreen
             StatsScreen.name -> StatsScreen
             LoginScreen.name -> LoginScreen
+            UserScreen.name -> UserScreen
             null -> HomeScreen
             else -> throw IllegalArgumentException("Route $route is not recognized")
         }

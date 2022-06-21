@@ -10,6 +10,7 @@ import com.paweljablonski.summary.screens.LoginScreen
 //import com.paweljablonski.summary.screens.LoginScreen
 import com.paweljablonski.summary.screens.SplashScreen
 import com.paweljablonski.summary.screens.home.Home
+import com.paweljablonski.summary.screens.user.UserScreen
 
 //import com.paweljablonski.summary.screens.home.Home
 
@@ -28,6 +29,9 @@ fun SummaryNavigation(){
 
         composable(SummaryScreens.LoginScreen.name){
             LoginScreen(navController = navController)
+        }
+        composable(SummaryScreens.UserScreen.name){
+            UserScreen(navController = navController)
         }
         
         composable(SummaryScreens.HomeScreen.name){
