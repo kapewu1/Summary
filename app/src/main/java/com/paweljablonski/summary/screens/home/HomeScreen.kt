@@ -1,8 +1,8 @@
 package com.paweljablonski.summary.screens.home
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -10,18 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
 import com.google.firebase.auth.FirebaseAuth
-import com.paweljablonski.summary.components.FABContent
-import com.paweljablonski.summary.components.SummaryAppBar
-import com.paweljablonski.summary.components.TitleSection
+import com.paweljablonski.summary.components.*
 import com.paweljablonski.summary.model.MCompetence
+import com.paweljablonski.summary.model.MUser
 import com.paweljablonski.summary.navigation.SummaryScreens
 
 
@@ -43,66 +39,31 @@ fun Home(navController: NavController) {
 }
 
 @Composable
-fun ListCard(competence: MCompetence = MCompetence("231sw", "Komunikacja", "Lorem ipsum", score = 65),
-            onPressDetails: (String) -> Unit = {}) {
-
-        val context = LocalContext.current
-        val resources = context.resources
-        val displayMetrics = resources.displayMetrics
-        val screenWidth = displayMetrics.widthPixels/ displayMetrics.density
-        val spacing = 10.dp
-        Card(
-            shape = RoundedCornerShape(29.dp),
-            backgroundColor = Color.White,
-            elevation = 6.dp,
-            modifier = Modifier
-                .padding(16.dp)
-                .height(82.dp)
-//                .width(202.dp)
-                .clickable { onPressDetails.invoke(competence.name.toString()) }
-
-        ) {
-            Column(modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
-//            Column(modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
-                horizontalAlignment = Alignment.Start
-            ) {
-                Row(horizontalArrangement = Arrangement.Center) {
-                    Image(painter = rememberImagePainter(data = ""), contentDescription= "competence image",
-                        modifier = Modifier
-                            .height(140.dp)
-                            .width(100.dp)
-                            .padding(4.dp)
-                        )
-                    Spacer(modifier = Modifier.width(25.dp))
-                    Text(
-                        text = competence.score.toString(),
-                        style = MaterialTheme.typography.body2,
-                        fontSize = 36.sp,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                }
-                Text(text = competence.name,
-                    modifier = Modifier.padding(8.dp),
-                    fontWeight = FontWeight.Bold,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = 24.sp
-                    )
-            }
-        }
-}
-
-
-@Composable
 fun HomeContent(navController: NavController){
     val email = FirebaseAuth.getInstance().currentUser?.email
     val currentUserName = if (!email.isNullOrEmpty()) email.split("@")?.get(0) else "N/A"
+
+    val listOfUsers = listOf(
+        MUser("1", "dasdw2d21", "Karen", "sadas", bio = "I like trains", department = "HR"),
+        MUser("2", "fasffas22", "Bob", "sadas", bio = "Democracy is an evil creature", department = "CEO"),
+        MUser("3", "dasdd222h", "Jeremy", "sadas", bio = "010100111", department = "Development Team")
+    )
+
+    val listOfCompetence = listOf(
+        MCompetence("1", "Komunikacja", "Lorem", 61),
+        MCompetence("2", "Zaangażowanie", "Lorem", 100),
+        MCompetence("3", "Determinacja", "Lorem", 76),
+        MCompetence("4", "Programowanie", "Lorem", 66),
+        MCompetence("5", "Analityczne Myślenie", "Lorem", 82),
+        MCompetence("6", "Podejmowanie Decyzji", "Lorem", 87)
+    )
 
     Column(
         Modifier.padding(2.dp),
         verticalArrangement = Arrangement.Top
     ) {
         Row(modifier = Modifier.align(alignment = Alignment.Start)) {
-            TitleSection(label = "Employee to evaluate")
+            TitleSection(label = "Welcome $currentUserName")
             Spacer(modifier = Modifier.fillMaxWidth(0.7f))
             Column {
                 Icon(
@@ -127,7 +88,60 @@ fun HomeContent(navController: NavController){
                 Divider()
             }
         }
-        ListCard()
+        TitleSection(label = "Kompetencje")
+        CompetenceList(listOfCompetence = listOfCompetence, navController = navController)
+        TitleSection(label = "Użytkownicy do oceny")
+        UserList(listOfUsers = listOfUsers, navController = navController)
     }
 }
 
+@Composable
+fun UserList(
+    listOfUsers: List<MUser>,
+    navController: NavController
+) {
+    UserScrollableComponent(listOfUsers){
+        //Todo: on card clicked navigate to details
+    }
+}
+
+@Composable
+fun CompetenceList(
+    listOfCompetence: List<MCompetence>,
+    navController: NavController
+){
+    CompetenceScrollableComponent(listOfCompetence){
+        //Todo: on card clicked navigate to details
+    }
+}
+
+@Composable
+fun CompetenceScrollableComponent(listOfCompetence: List<MCompetence>, onCardPressed: (String) -> Unit) {
+    val scrollState = rememberScrollState()
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .heightIn(280.dp)
+        .horizontalScroll(scrollState)){
+
+        for (competence in listOfCompetence){
+            CompetenceCard(competence = competence){
+                onCardPressed(it)
+            }
+        }
+    }
+}
+@Composable
+fun UserScrollableComponent(listOfUsers: List<MUser>, onCardPressed: (String) -> Unit) {
+    val scrollState = rememberScrollState()
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .heightIn(280.dp)
+        .horizontalScroll(scrollState)){
+
+        for (user in listOfUsers){
+            UserCard(user = user){
+                onCardPressed(it)
+            }
+        }
+    }
+}

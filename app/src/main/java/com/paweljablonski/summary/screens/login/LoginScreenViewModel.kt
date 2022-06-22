@@ -11,7 +11,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.paweljablonski.summary.model.MUser
 
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -47,7 +46,7 @@ class LoginScreenViewModel: ViewModel() {
             displayName = "Tester1",
             bio = "Lorem ipsum dksdkakdasmaskdaskdmk",
             avatarUrl = "https://www.firebase.com/dsdaw2d2aaa",
-            department = null,
+            department = "Dev",
             id = null
         ).toMap()
 
