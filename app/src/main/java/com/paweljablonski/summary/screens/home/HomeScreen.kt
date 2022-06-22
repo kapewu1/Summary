@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,12 +57,13 @@ fun ListCard(competence: MCompetence = MCompetence("231sw", "Komunikacja", "Lore
             elevation = 6.dp,
             modifier = Modifier
                 .padding(16.dp)
-                .height(242.dp)
-                .width(202.dp)
+                .height(82.dp)
+//                .width(202.dp)
                 .clickable { onPressDetails.invoke(competence.name.toString()) }
 
         ) {
             Column(modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
+//            Column(modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
                 horizontalAlignment = Alignment.Start
             ) {
                 Row(horizontalArrangement = Arrangement.Center) {
@@ -71,9 +73,20 @@ fun ListCard(competence: MCompetence = MCompetence("231sw", "Komunikacja", "Lore
                             .width(100.dp)
                             .padding(4.dp)
                         )
-                    Spacer(modifier = Modifier.width(50.dp))
-
+                    Spacer(modifier = Modifier.width(25.dp))
+                    Text(
+                        text = competence.score.toString(),
+                        style = MaterialTheme.typography.body2,
+                        fontSize = 36.sp,
+                        modifier = Modifier.padding(8.dp)
+                    )
                 }
+                Text(text = competence.name,
+                    modifier = Modifier.padding(8.dp),
+                    fontWeight = FontWeight.Bold,
+                    overflow = TextOverflow.Ellipsis,
+                    fontSize = 24.sp
+                    )
             }
         }
 }
@@ -113,8 +126,8 @@ fun HomeContent(navController: NavController){
                 )
                 Divider()
             }
-            
         }
+        ListCard()
     }
 }
 
