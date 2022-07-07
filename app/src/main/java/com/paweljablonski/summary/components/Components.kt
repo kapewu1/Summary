@@ -321,25 +321,25 @@ private fun CreateImageProfile(modifier: Modifier = Modifier) {
 
 
 
-
-@Preview
-@Composable
-fun ScoreViewCard() {
-    Card(modifier = Modifier
-        .width(200.dp)
-        .height(390.dp)
-        .padding(12.dp),
-        shape = RoundedCornerShape(corner = CornerSize(15.dp)),
-        elevation = 4.dp) {
-        Column(modifier = Modifier.height(200.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            CreateImageProfile()
-            Divider()
-            Text(text = "Twój wynik", style = MaterialTheme.typography.h5, color = MaterialTheme.colors.primaryVariant, textAlign = TextAlign.Center)
-        }
-
-    }
-
-}
+//
+//@Preview
+//@Composable
+//fun ScoreViewCard() {
+//    Card(modifier = Modifier
+//        .width(200.dp)
+//        .height(390.dp)
+//        .padding(12.dp),
+//        shape = RoundedCornerShape(corner = CornerSize(15.dp)),
+//        elevation = 4.dp) {
+//        Column(modifier = Modifier.height(200.dp),
+//            verticalArrangement = Arrangement.Top,
+//            horizontalAlignment = Alignment.CenterHorizontally) {
+//            CreateImageProfile()
+//            Divider()
+//            Text(text = "Twój wynik", style = MaterialTheme.typography.h5, color = MaterialTheme.colors.primaryVariant, textAlign = TextAlign.Center)
+//        }
+//
+//    }
+//
+//}
 

@@ -5,8 +5,11 @@ enum class SummaryScreens {
     HomeScreen,
     SearchScreen,
     StatsScreen,
+    UserSettingsScreen,
+    LoginScreen,
     UserScreen,
-    LoginScreen;
+    CompetenceScreen
+    ;
 
     companion object {
         fun fromRoute(route: String):SummaryScreens
@@ -16,7 +19,9 @@ enum class SummaryScreens {
             SearchScreen.name -> SearchScreen
             StatsScreen.name -> StatsScreen
             LoginScreen.name -> LoginScreen
+            UserSettingsScreen.name -> UserSettingsScreen
             UserScreen.name -> UserScreen
+            CompetenceScreen.name -> CompetenceScreen
             null -> HomeScreen
             else -> throw IllegalArgumentException("Route $route is not recognized")
         }

@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +44,7 @@ fun HomeContent(navController: NavController){
     val email = FirebaseAuth.getInstance().currentUser?.email
     val currentUserName = if (!email.isNullOrEmpty()) email.split("@")?.get(0) else "N/A"
 
+
     val listOfUsers = listOf(
         MUser("1", "dasdw2d21", "Karen", "sadas", bio = "I like trains", department = "HR"),
         MUser("2", "fasffas22", "Bob", "sadas", bio = "Democracy is an evil creature", department = "CEO"),
@@ -71,7 +73,7 @@ fun HomeContent(navController: NavController){
                     contentDescription = "Profile",
                     modifier = Modifier
                         .clickable {
-                            navController.navigate(SummaryScreens.UserScreen.name)
+                            navController.navigate(SummaryScreens.UserSettingsScreen.name)
                         }
                         .size(45.dp),
                     tint = MaterialTheme.colors.secondaryVariant
@@ -88,7 +90,12 @@ fun HomeContent(navController: NavController){
                 Divider()
             }
         }
-        TitleSection(label = "Twoje Kompetencje")
+
+        TitleSection(label = "Twoje Ocena")
+
+        Text(text = "80", style = MaterialTheme.typography.h1, color = MaterialTheme.colors.primaryVariant, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+
+        TitleSection(label = "Twoja Kompetencje")
         CompetenceList(listOfCompetence = listOfCompetence, navController = navController)
         TitleSection(label = "Użytkownicy")
         UserList(listOfUsers = listOfUsers, navController = navController)
@@ -101,6 +108,7 @@ fun UserList(
     navController: NavController
 ) {
     UserScrollableComponent(listOfUsers){
+        navController.navigate(SummaryScreens.UserScreen.name)
         //Todo: on card clicked navigate to details
     }
 }
@@ -111,6 +119,7 @@ fun CompetenceList(
     navController: NavController
 ){
     CompetenceScrollableComponent(listOfCompetence){
+        navController.navigate(SummaryScreens.CompetenceScreen.name)
         //Todo: on card clicked navigate to details
     }
 }
@@ -120,7 +129,7 @@ fun CompetenceScrollableComponent(listOfCompetence: List<MCompetence>, onCardPre
     val scrollState = rememberScrollState()
     Row(modifier = Modifier
         .fillMaxWidth()
-        .heightIn(180.dp)
+        .heightIn(160.dp)
         .horizontalScroll(scrollState)){
 
         for (competence in listOfCompetence){
@@ -135,7 +144,7 @@ fun UserScrollableComponent(listOfUsers: List<MUser>, onCardPressed: (String) ->
     val scrollState = rememberScrollState()
     Row(modifier = Modifier
         .fillMaxWidth()
-        .heightIn(280.dp)
+        .heightIn(240.dp)
         .horizontalScroll(scrollState)){
 
         for (user in listOfUsers){
