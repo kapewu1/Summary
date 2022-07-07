@@ -51,7 +51,8 @@ fun SummaryLogo(modifier: Modifier = Modifier) {
     Text(text = "Summary",
         modifier = modifier.padding(bottom = 16.dp),
         style = MaterialTheme.typography.h3,
-        color = Color.Red.copy(alpha = 0.5f))
+        color = Color.Red.copy(alpha = 0.5f),
+        )
 }
 
 
@@ -165,6 +166,7 @@ fun TitleSection(
 fun SummaryAppBar(
     title: String,
     showProfile: Boolean = true,
+    showCompetenceAdd: Boolean = true,
     navController: NavController
 ){
     TopAppBar(
@@ -184,6 +186,15 @@ fun SummaryAppBar(
                     color = Color.Red.copy(alpha = 0.7f),
                     style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
                 )
+                IconButton(onClick = {
+                    navController.navigate(SummaryScreens.CompetenceScreen.name)
+                }) {
+                    if (showCompetenceAdd){
+                        Icon(imageVector = Icons.Default.Add, contentDescription = "Add Competence")
+                    }
+                }
+
+
                 Spacer(modifier = Modifier.width(150.dp))
             }
         },
@@ -241,7 +252,7 @@ fun CompetenceCard(competence: MCompetence = MCompetence("231sw", "Komunikacja",
         elevation = 6.dp,
         modifier = Modifier
             .padding(16.dp)
-            .clickable { onPressDetails.invoke(competence.name)}
+            .clickable { onPressDetails.invoke(competence.name) }
 //            .fillMaxWidth().heightIn(180.dp)
             .widthIn(120.dp)
             .heightIn(120.dp)
@@ -290,7 +301,7 @@ fun UserCard(user: MUser,
         Modifier
             .height(200.dp)
             .padding(16.dp)
-            .clickable { onPressDetails.invoke(user.displayName)},
+            .clickable { onPressDetails.invoke(user.displayName) },
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally) {
             CreateImageProfile()
@@ -318,28 +329,3 @@ private fun CreateImageProfile(modifier: Modifier = Modifier) {
 
     }
 }
-
-
-
-//
-//@Preview
-//@Composable
-//fun ScoreViewCard() {
-//    Card(modifier = Modifier
-//        .width(200.dp)
-//        .height(390.dp)
-//        .padding(12.dp),
-//        shape = RoundedCornerShape(corner = CornerSize(15.dp)),
-//        elevation = 4.dp) {
-//        Column(modifier = Modifier.height(200.dp),
-//            verticalArrangement = Arrangement.Top,
-//            horizontalAlignment = Alignment.CenterHorizontally) {
-//            CreateImageProfile()
-//            Divider()
-//            Text(text = "Twój wynik", style = MaterialTheme.typography.h5, color = MaterialTheme.colors.primaryVariant, textAlign = TextAlign.Center)
-//        }
-//
-//    }
-//
-//}
-

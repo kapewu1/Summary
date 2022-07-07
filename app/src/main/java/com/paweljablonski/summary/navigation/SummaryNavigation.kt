@@ -8,12 +8,12 @@ import androidx.navigation.compose.rememberNavController
 import com.paweljablonski.summary.screens.LoginScreen
 //import com.paweljablonski.summary.screens.LoginScreen
 import com.paweljablonski.summary.screens.SplashScreen
-import com.paweljablonski.summary.screens.details.competence.CompetenceScreen
+import com.paweljablonski.summary.screens.competence.CompetenceScreen
+import com.paweljablonski.summary.screens.details.competence_detail.CompetenceDetailScreen
 import com.paweljablonski.summary.screens.details.user.UserScreen
 import com.paweljablonski.summary.screens.home.Home
+import com.paweljablonski.summary.screens.survey.SurveyScreen
 import com.paweljablonski.summary.screens.user_settings.UserSettingsScreen
-
-//import com.paweljablonski.summary.screens.home.Home
 
 
 @ExperimentalComposeUiApi
@@ -43,17 +43,16 @@ fun SummaryNavigation(){
             UserScreen(navController = navController)
         }
 
-
+        composable(SummaryScreens.CompetenceDetailScreen.name){
+            CompetenceDetailScreen(navController = navController)
+        }
         composable(SummaryScreens.CompetenceScreen.name){
             CompetenceScreen(navController = navController)
         }
 
+        composable(SummaryScreens.SurveyScreen.name){
+            SurveyScreen(navController = navController)
+        }
 
-//        composable(SummaryScreens.HomeScreen.name){
-//            Home(navController = navController)
-//        }
-//        composable(SummaryScreens.LoginScreen.name){
-//            LoginScreen(navController = navController)
-//        }
     }
 }

@@ -26,10 +26,11 @@ import com.paweljablonski.summary.navigation.SummaryScreens
 fun Home(navController: NavController) {
     Scaffold (
         topBar = {
-            SummaryAppBar("Summary", navController = navController)
+            SummaryAppBar("Summary", navController = navController) //todo Check if logged profile is administrator one
         },
         floatingActionButton = {
             FABContent{
+                navController.navigate(SummaryScreens.SurveyScreen.name)
             }
         }
             ) {
@@ -46,9 +47,9 @@ fun HomeContent(navController: NavController){
 
 
     val listOfUsers = listOf(
-        MUser("1", "dasdw2d21", "Karen", "sadas", bio = "I like trains", department = "HR"),
-        MUser("2", "fasffas22", "Bob", "sadas", bio = "Democracy is an evil creature", department = "CEO"),
-        MUser("3", "dasdd222h", "Jeremy", "sadas", bio = "010100111", department = "Development Team")
+        MUser("1", "dasdw2d21", "Karen", "sadas"),
+        MUser("2", "fasffas22", "Bob", "sadas"),
+        MUser("3", "dasdd222h", "Jeremy", "sadas")
     )
 
     val listOfCompetence = listOf(
@@ -68,7 +69,9 @@ fun HomeContent(navController: NavController){
             TitleSection(label = "Welcome $currentUserName")
             Spacer(modifier = Modifier.fillMaxWidth(0.7f))
             Column {
+
                 Icon(
+
                     imageVector = Icons.Filled.AccountCircle,
                     contentDescription = "Profile",
                     modifier = Modifier

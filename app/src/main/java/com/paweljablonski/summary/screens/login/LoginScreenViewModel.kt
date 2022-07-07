@@ -43,10 +43,8 @@ class LoginScreenViewModel: ViewModel() {
         val userId = auth.currentUser?.uid
         val user = MUser(
             userId = userId.toString(),
-            displayName = "Tester1",
-            bio = "Lorem ipsum dksdkakdasmaskdaskdmk",
-            avatarUrl = "https://www.firebase.com/dsdaw2d2aaa",
-            department = "Dev",
+            displayName = "New User",
+            avatarUrl = "https://firebasestorage.googleapis.com/v0/b/summary-adc09.appspot.com/o/icons8-user-96.png?alt=media&token=80ec5409-32aa-4dc4-bb06-4274735655cf",
             id = null
         ).toMap()
 

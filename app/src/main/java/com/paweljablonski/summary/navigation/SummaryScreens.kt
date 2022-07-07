@@ -8,7 +8,9 @@ enum class SummaryScreens {
     UserSettingsScreen,
     LoginScreen,
     UserScreen,
-    CompetenceScreen
+    CompetenceDetailScreen,
+    CompetenceScreen,
+    SurveyScreen
     ;
 
     companion object {
@@ -21,7 +23,9 @@ enum class SummaryScreens {
             LoginScreen.name -> LoginScreen
             UserSettingsScreen.name -> UserSettingsScreen
             UserScreen.name -> UserScreen
+            CompetenceDetailScreen.name -> CompetenceDetailScreen
             CompetenceScreen.name -> CompetenceScreen
+            SurveyScreen.name -> SurveyScreen
             null -> HomeScreen
             else -> throw IllegalArgumentException("Route $route is not recognized")
         }
