@@ -120,7 +120,7 @@ fun CompetenceScrollableComponent(listOfCompetence: List<MCompetence>, onCardPre
     val scrollState = rememberScrollState()
     Row(modifier = Modifier
         .fillMaxWidth()
-        .heightIn(280.dp)
+        .heightIn(180.dp)
         .horizontalScroll(scrollState)){
 
         for (competence in listOfCompetence){

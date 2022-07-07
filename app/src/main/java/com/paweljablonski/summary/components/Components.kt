@@ -1,7 +1,11 @@
 package com.paweljablonski.summary.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -19,7 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
+import com.paweljablonski.summary.R
 import com.paweljablonski.summary.model.MCompetence
 import com.paweljablonski.summary.model.MUser
 import com.paweljablonski.summary.navigation.SummaryScreens
@@ -237,7 +244,7 @@ fun CompetenceCard(competence: MCompetence = MCompetence("231sw", "Komunikacja",
             .clickable { onPressDetails.invoke(competence.name)}
 //            .fillMaxWidth().heightIn(180.dp)
             .widthIn(120.dp)
-            .heightIn(180.dp)
+            .heightIn(120.dp)
     ) {
         Column(modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
             verticalArrangement = Arrangement.Center
@@ -254,7 +261,7 @@ fun CompetenceCard(competence: MCompetence = MCompetence("231sw", "Komunikacja",
                     fontSize = 18.sp,
 
                     )
-                Spacer(modifier = Modifier.width(140.dp))
+                Spacer(modifier = Modifier.width(100.dp))
 
                 Text(
                     text = competence.score.toString(),
@@ -273,33 +280,66 @@ fun UserCard(user: MUser,
              onPressDetails: (String) -> Unit = {}) {
 
 
-    Card(
-        shape = RoundedCornerShape(29.dp),
-        backgroundColor = Color.White,
-        elevation = 6.dp,
-        modifier = Modifier
+    Card(modifier = Modifier
+        .width(200.dp)
+        .height(290.dp)
+        .padding(12.dp),
+        shape = RoundedCornerShape(corner = CornerSize(15.dp)),
+        elevation = 4.dp) {
+        Column(modifier =
+        Modifier
+            .height(200.dp)
             .padding(16.dp)
-            .clickable { onPressDetails.invoke(user.displayName)}
-            .fillMaxWidth().heightIn(80.dp)
-    ) {
-        Row(horizontalArrangement = Arrangement.Start
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.VerifiedUser,
-                    contentDescription = "Icon",
-                    tint = Color.Red
-                )
-                Spacer(modifier = Modifier.width(140.dp))
-                Text(text = user.displayName,
-                    modifier = Modifier
-                        .padding(16.dp),
-                    fontWeight = FontWeight.Bold,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = 18.sp,
-
-                    )
-            }
+            .clickable { onPressDetails.invoke(user.displayName)},
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            CreateImageProfile()
+            Divider()
+            Text(text = user.displayName, style = MaterialTheme.typography.h5, color = MaterialTheme.colors.primaryVariant, textAlign = TextAlign.Center)
         }
+
+    }
+}
+
+@Composable
+private fun CreateImageProfile(modifier: Modifier = Modifier) {
+    Surface(modifier = modifier
+        .size(150.dp)
+        .padding(5.dp),
+        shape = CircleShape,
+        border = BorderStroke(0.5.dp, Color.LightGray),
+        elevation = 4.dp,
+        color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)) {
+
+        Image(painter = painterResource(id = R.drawable.ic_launcher_background),
+            contentDescription = "profile image",
+            modifier = modifier.size(135.dp),
+            contentScale = ContentScale.Crop)
+
+    }
+}
+
+
+
+
+@Preview
+@Composable
+fun ScoreViewCard() {
+    Card(modifier = Modifier
+        .width(200.dp)
+        .height(390.dp)
+        .padding(12.dp),
+        shape = RoundedCornerShape(corner = CornerSize(15.dp)),
+        elevation = 4.dp) {
+        Column(modifier = Modifier.height(200.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            CreateImageProfile()
+            Divider()
+            Text(text = "Twój wynik", style = MaterialTheme.typography.h5, color = MaterialTheme.colors.primaryVariant, textAlign = TextAlign.Center)
+        }
+
+    }
 
 }
 
