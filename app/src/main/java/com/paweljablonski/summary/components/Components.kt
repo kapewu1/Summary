@@ -267,12 +267,6 @@ fun CompetenceCard(competence: MCompetence = MCompetence("231sw", "Komunikacja",
 fun UserCard(user: MUser,
              onPressDetails: (String) -> Unit = {}) {
 
-    val context = LocalContext.current
-    val resources = context.resources
-    val displayMetrics = resources.displayMetrics
-    val screenWidth = displayMetrics.widthPixels/ displayMetrics.density
-    val spacing = 10.dp
-
 
     Card(
         shape = RoundedCornerShape(29.dp),
@@ -283,15 +277,12 @@ fun UserCard(user: MUser,
             .clickable { onPressDetails.invoke(user.displayName)}
             .fillMaxWidth().heightIn(80.dp)
     ) {
-        Column(modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
-            horizontalAlignment = Alignment.Start
-        ) {
-            Row(horizontalArrangement = Arrangement.Start
+        Row(horizontalArrangement = Arrangement.Start
             ) {
                 Icon(
                     imageVector = Icons.Rounded.VerifiedUser,
                     contentDescription = "Icon",
-                    tint = Color.White
+                    tint = Color.Red
                 )
                 Spacer(modifier = Modifier.width(140.dp))
                 Text(text = user.displayName,
@@ -304,6 +295,6 @@ fun UserCard(user: MUser,
                     )
             }
         }
-    }
+
 }
 

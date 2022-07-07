@@ -88,9 +88,9 @@ fun HomeContent(navController: NavController){
                 Divider()
             }
         }
-        TitleSection(label = "Kompetencje")
+        TitleSection(label = "Twoje Kompetencje")
         CompetenceList(listOfCompetence = listOfCompetence, navController = navController)
-        TitleSection(label = "Użytkownicy do oceny")
+        TitleSection(label = "Użytkownicy")
         UserList(listOfUsers = listOfUsers, navController = navController)
     }
 }

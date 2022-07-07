@@ -7,7 +7,7 @@ data class MUser(
     val avatarUrl: String,
     val bio: String,
 //    var department: MDepartment? = null
-    var department: String? = "N/A"
+    var department: String
 ){
     fun toMap() : MutableMap<String, Any>{
         return mutableMapOf(
