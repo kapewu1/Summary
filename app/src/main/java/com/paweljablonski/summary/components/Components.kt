@@ -29,6 +29,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -215,7 +216,7 @@ fun FABContent(onTap: () -> Unit){
 }
 
 
-
+//@Preview
 @Composable
 fun CompetenceCard(competence: MCompetence = MCompetence("231sw", "Komunikacja", "Lorem ipsum", score = 65),
                    onPressDetails: (String) -> Unit = {}) {
@@ -234,12 +235,16 @@ fun CompetenceCard(competence: MCompetence = MCompetence("231sw", "Komunikacja",
         modifier = Modifier
             .padding(16.dp)
             .clickable { onPressDetails.invoke(competence.name)}
-            .fillMaxWidth().heightIn(80.dp)
+//            .fillMaxWidth().heightIn(180.dp)
+            .widthIn(120.dp)
+            .heightIn(180.dp)
     ) {
         Column(modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
-            horizontalAlignment = Alignment.Start
+            verticalArrangement = Arrangement.Center
+//            horizontalAlignment = Alignment.Start
         ) {
             Row(horizontalArrangement = Arrangement.Start
+//            Row(horizontalArrangement = Arrangement.Start
             ) {
                 Text(text = competence.name,
                     modifier = Modifier
