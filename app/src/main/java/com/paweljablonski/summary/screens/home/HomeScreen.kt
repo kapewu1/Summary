@@ -112,7 +112,6 @@ fun UserList(
 ) {
     UserScrollableComponent(listOfUsers){
         navController.navigate(SummaryScreens.UserScreen.name)
-        //Todo: on card clicked navigate to details
     }
 }
 
@@ -123,7 +122,6 @@ fun CompetenceList(
 ){
     CompetenceScrollableComponent(listOfCompetence){
         navController.navigate(SummaryScreens.CompetenceScreen.name)
-        //Todo: on card clicked navigate to details
     }
 }
 
