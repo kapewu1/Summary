@@ -57,16 +57,9 @@ fun HomeContent(navController: NavController,
 
     var listOfUsers = emptyList<MUser>()
 
-//    if (!viewModel.data.value.data.isNullOrEmpty()){
-//        listOfUsers = viewModel.data.value?.data!!.toList()
-//    }
-
-
-//    Log.d("HomeScreen", "FirebaseFirestore Instance: ${FirebaseFirestore.getInstance().collection("users")}")
-
-
-
-
+    if (!viewModel.data.value.data.isNullOrEmpty()){
+        listOfUsers = viewModel.data.value?.data!!.toList()
+    }
 
 
 //    val listOfUsers = listOf(
