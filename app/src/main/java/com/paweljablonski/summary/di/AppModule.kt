@@ -1,7 +1,8 @@
 package com.paweljablonski.summary.di
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.paweljablonski.summary.repository.FireRepository
+import com.paweljablonski.summary.repository.FireCompetenceRepository
+import com.paweljablonski.summary.repository.FireUserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +16,11 @@ object AppModule {
     @Singleton
     @Provides
     fun provideFireUserRepository()
-    = FireRepository(queryUser = FirebaseFirestore.getInstance().collection("users"))
+    = FireUserRepository(queryUser = FirebaseFirestore.getInstance().collection("users"))
+
+    @Singleton
+    @Provides
+    fun provideFireCompetenceRepository()
+    = FireCompetenceRepository(queryCompetence = FirebaseFirestore.getInstance().collection("competences"))
 
 }

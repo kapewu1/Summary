@@ -1,5 +1,4 @@
 package com.paweljablonski.summary.screens.home
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -18,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.paweljablonski.summary.components.*
 import com.paweljablonski.summary.model.MCompetence
 import com.paweljablonski.summary.model.MUser
@@ -53,29 +51,30 @@ fun HomeContent(navController: NavController,
 ){
     val email = FirebaseAuth.getInstance().currentUser?.email
     val currentUserName = if (!email.isNullOrEmpty()) email.split("@")?.get(0) else "N/A"
-
+    val currentUser = FirebaseAuth.getInstance().currentUser
 
     var listOfUsers = emptyList<MUser>()
 
-    if (!viewModel.data.value.data.isNullOrEmpty()){
-        listOfUsers = viewModel.data.value?.data!!.toList()
+    if (!viewModel.userData.value.data.isNullOrEmpty()){
+        listOfUsers = viewModel.userData.value?.data!!.toList()
     }
 
+    var listOfCompetence = emptyList<MCompetence>()
 
-//    val listOfUsers = listOf(
-//        MUser("1", "dasdw2d21", "Karen", "sadas"),
-//        MUser("2", "fasffas22", "Bob", "sadas"),
-//        MUser("3", "dasdd222h", "Jeremy", "sadas")
+    if (!viewModel.competenceData.value.data.isNullOrEmpty()){
+        listOfCompetence = viewModel.competenceData.value?.data!!.toList().filter { mCompetence ->
+            mCompetence.userId == currentUser?.uid.toString()
+        }
+    }
+//
+//    val listOfCompetence = listOf(
+//        MCompetence("1", "Komunikacja", "Lorem", 61),
+//        MCompetence("2", "Zaangażowanie", "Lorem", 100),
+//        MCompetence("3", "Determinacja", "Lorem", 76),
+//        MCompetence("4", "Programowanie", "Lorem", 66),
+//        MCompetence("5", "Analityczne Myślenie", "Lorem", 82),
+//        MCompetence("6", "Podejmowanie Decyzji", "Lorem", 87)
 //    )
-
-    val listOfCompetence = listOf(
-        MCompetence("1", "Komunikacja", "Lorem", 61),
-        MCompetence("2", "Zaangażowanie", "Lorem", 100),
-        MCompetence("3", "Determinacja", "Lorem", 76),
-        MCompetence("4", "Programowanie", "Lorem", 66),
-        MCompetence("5", "Analityczne Myślenie", "Lorem", 82),
-        MCompetence("6", "Podejmowanie Decyzji", "Lorem", 87)
-    )
 
     Column(
         Modifier.padding(2.dp),

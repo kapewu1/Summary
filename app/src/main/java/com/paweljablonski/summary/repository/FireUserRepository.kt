@@ -10,7 +10,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 
-class FireRepository @Inject constructor(
+class FireUserRepository @Inject constructor(
     private val queryUser: Query
 ) {
     suspend fun getAllUsersFromDatabase(): DataOrException<List<MUser>, Boolean, Exception> {

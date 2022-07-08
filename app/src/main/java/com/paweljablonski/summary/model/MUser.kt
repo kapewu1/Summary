@@ -5,7 +5,7 @@ import com.google.firebase.firestore.Exclude
 data class MUser(
     @Exclude val id: String? = null,
     val userId: String = "",
-    val displayName: String = "",
+    val displayName: String = "New User",
     val avatarUrl: String = ""){
 
 
