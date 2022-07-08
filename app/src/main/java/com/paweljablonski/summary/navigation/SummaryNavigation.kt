@@ -2,6 +2,7 @@ package com.paweljablonski.summary.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,6 +13,7 @@ import com.paweljablonski.summary.screens.competence.CompetenceScreen
 import com.paweljablonski.summary.screens.details.competence_detail.CompetenceDetailScreen
 import com.paweljablonski.summary.screens.details.user.UserScreen
 import com.paweljablonski.summary.screens.home.Home
+import com.paweljablonski.summary.screens.home.HomeScreenViewModel
 import com.paweljablonski.summary.screens.survey.SurveyScreen
 import com.paweljablonski.summary.screens.user_settings.UserSettingsScreen
 
@@ -36,7 +38,8 @@ fun SummaryNavigation(){
         }
         
         composable(SummaryScreens.HomeScreen.name){
-            Home(navController = navController)
+            val homeViewModel = hiltViewModel<HomeScreenViewModel>()
+            Home(navController = navController, homeViewModel)
         }
 
         composable(SummaryScreens.UserScreen.name){

@@ -1,4 +1,5 @@
 package com.paweljablonski.summary.screens.home
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -14,8 +15,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.paweljablonski.summary.components.*
 import com.paweljablonski.summary.model.MCompetence
 import com.paweljablonski.summary.model.MUser
@@ -23,7 +26,11 @@ import com.paweljablonski.summary.navigation.SummaryScreens
 
 
 @Composable
-fun Home(navController: NavController) {
+fun Home(
+    navController: NavController,
+    viewModel: HomeScreenViewModel = hiltViewModel()
+
+) {
     Scaffold (
         topBar = {
             SummaryAppBar("Summary", navController = navController) //todo Check if logged profile is administrator one
@@ -35,22 +42,38 @@ fun Home(navController: NavController) {
         }
             ) {
         Surface(modifier = Modifier.fillMaxSize()) {
-            HomeContent(navController = navController)
+            HomeContent(navController = navController, viewModel)
         }
     }
 }
 
 @Composable
-fun HomeContent(navController: NavController){
+fun HomeContent(navController: NavController,
+                viewModel: HomeScreenViewModel
+){
     val email = FirebaseAuth.getInstance().currentUser?.email
     val currentUserName = if (!email.isNullOrEmpty()) email.split("@")?.get(0) else "N/A"
 
 
-    val listOfUsers = listOf(
-        MUser("1", "dasdw2d21", "Karen", "sadas"),
-        MUser("2", "fasffas22", "Bob", "sadas"),
-        MUser("3", "dasdd222h", "Jeremy", "sadas")
-    )
+    var listOfUsers = emptyList<MUser>()
+
+//    if (!viewModel.data.value.data.isNullOrEmpty()){
+//        listOfUsers = viewModel.data.value?.data!!.toList()
+//    }
+
+
+//    Log.d("HomeScreen", "FirebaseFirestore Instance: ${FirebaseFirestore.getInstance().collection("users")}")
+
+
+
+
+
+
+//    val listOfUsers = listOf(
+//        MUser("1", "dasdw2d21", "Karen", "sadas"),
+//        MUser("2", "fasffas22", "Bob", "sadas"),
+//        MUser("3", "dasdd222h", "Jeremy", "sadas")
+//    )
 
     val listOfCompetence = listOf(
         MCompetence("1", "Komunikacja", "Lorem", 61),

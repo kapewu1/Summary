@@ -39,14 +39,43 @@ class LoginScreenViewModel: ViewModel() {
         }
     }
 
+//    private fun createUser(displayName: String?) {
+//        val userId = auth.currentUser?.uid
+//        val user = MUser(
+//            userId = userId.toString(),
+//            displayName = "sdsd",
+//            avatarUrl = "4274735655cf",
+//            id = null
+//        ).toMap()
+//
+//
+//
+//        Log.d("createUser", "User Created ${user.toString()}")
+
+
+//
+//        FirebaseFirestore.getInstance().collection("users")
+//            .add(user).addOnCompleteListener {
+//                if (it.isSuccessful){
+//
+//                    Log.d("createUser", "User Created SUCCESS}")
+//                }else{
+//
+//                    Log.d("createUser", "User Created FAILED}")
+//                }
+//
+//            }
+
+//    }
+
     private fun createUser(displayName: String?) {
         val userId = auth.currentUser?.uid
-        val user = MUser(
-            userId = userId.toString(),
-            displayName = "New User",
-            avatarUrl = "https://firebasestorage.googleapis.com/v0/b/summary-adc09.appspot.com/o/icons8-user-96.png?alt=media&token=80ec5409-32aa-4dc4-bb06-4274735655cf",
-            id = null
-        ).toMap()
+
+        val user = MUser(userId = userId.toString(),
+            displayName = displayName.toString(),
+            avatarUrl = "",
+            id = null).toMap()
+
 
         FirebaseFirestore.getInstance().collection("users")
             .add(user)
