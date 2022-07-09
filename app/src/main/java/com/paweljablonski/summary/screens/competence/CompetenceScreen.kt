@@ -88,16 +88,17 @@ fun CompetenceContent(navController: NavController){
                 ){
                     Button(onClick = {
                         if (valid){
-
                             val competence = MCompetence(
                                 name = name.value,
                                 description = description.value,
                                 competenceId = "test",
                                 id = null
                             ).toMap()
+                            val collection = FirebaseFirestore.getInstance().collection("competences")
 
-                            FirebaseFirestore.getInstance().collection("competences")
+                            collection
                                 .add(competence).addOnSuccessListener { documentReference ->
+                                    collection.document(documentReference.id).update("competenceId", documentReference.id)
                                     navController.navigate(SummaryScreens.HomeScreen.name)
                                 }
 
