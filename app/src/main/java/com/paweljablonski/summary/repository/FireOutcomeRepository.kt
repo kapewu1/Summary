@@ -3,22 +3,21 @@ package com.paweljablonski.summary.repository
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.paweljablonski.summary.data.DataOrException
-import com.paweljablonski.summary.model.MCompetence
 import com.paweljablonski.summary.model.MOutcome
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 
-class FireCompetenceRepository @Inject constructor(
-    private val queryCompetence: Query
+class FireOutcomeRepository @Inject constructor(
+    private val queryOutcome: Query
 ) {
-    suspend fun getAllCompetenceFromDatabase(): DataOrException<List<MCompetence>, Boolean, Exception> {
-        val dataOrException = DataOrException<List<MCompetence>, Boolean, Exception>()
+    suspend fun getAllOutcomesFromDatabase(): DataOrException<List<MOutcome>, Boolean, Exception> {
+        val dataOrException = DataOrException<List<MOutcome>, Boolean, Exception>()
 
         try {
             dataOrException.loading = true
-            dataOrException.data =  queryCompetence.get().await().documents.map { documentSnapshot ->
-                documentSnapshot.toObject(MCompetence::class.java)!!
+            dataOrException.data =  queryOutcome.get().await().documents.map { documentSnapshot ->
+                documentSnapshot.toObject(MOutcome::class.java)!!
             }
 
             if (!dataOrException.data.isNullOrEmpty()) dataOrException.loading = false

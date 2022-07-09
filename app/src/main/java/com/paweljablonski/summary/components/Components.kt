@@ -15,7 +15,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Logout
-import androidx.compose.material.icons.rounded.VerifiedUser
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
@@ -35,13 +34,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.paweljablonski.summary.R
-import com.paweljablonski.summary.model.MCompetence
+import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.model.MUser
 import com.paweljablonski.summary.navigation.SummaryScreens
 
@@ -236,7 +234,7 @@ fun FABContent(onTap: () -> Unit){
 
 //@Preview
 @Composable
-fun CompetenceCard(competence: MCompetence = MCompetence("231sw", "Komunikacja", "Lorem ipsum", score = 65),
+fun CompetenceCard(competence: MOutcome,
                    onPressDetails: (String) -> Unit = {}) {
 
     val context = LocalContext.current
@@ -253,16 +251,14 @@ fun CompetenceCard(competence: MCompetence = MCompetence("231sw", "Komunikacja",
         modifier = Modifier
             .padding(16.dp)
             .clickable { onPressDetails.invoke(competence.name) }
-//            .fillMaxWidth().heightIn(180.dp)
+//            .clickable { onPressDetails.invoke(competence.name) }
             .widthIn(120.dp)
             .heightIn(120.dp)
     ) {
         Column(modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
             verticalArrangement = Arrangement.Center
-//            horizontalAlignment = Alignment.Start
         ) {
             Row(horizontalArrangement = Arrangement.Start
-//            Row(horizontalArrangement = Arrangement.Start
             ) {
                 Text(text = competence.name,
                     modifier = Modifier

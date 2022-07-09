@@ -18,7 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.paweljablonski.summary.components.*
-import com.paweljablonski.summary.model.MCompetence
+import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.model.MUser
 import com.paweljablonski.summary.navigation.SummaryScreens
 
@@ -59,13 +59,15 @@ fun HomeContent(navController: NavController,
         listOfUsers = viewModel.userData.value?.data!!.toList()
     }
 
-    var listOfCompetence = emptyList<MCompetence>()
+    var listOfCompetence = emptyList<MOutcome>()
 
-    if (!viewModel.competenceData.value.data.isNullOrEmpty()){
-        listOfCompetence = viewModel.competenceData.value?.data!!.toList().filter { mCompetence ->
-            mCompetence.userId == currentUser?.uid.toString()
+    if (!viewModel.outcomeData.value.data.isNullOrEmpty()){
+        listOfCompetence = viewModel.outcomeData.value?.data!!.toList().filter { mOutcome ->
+            mOutcome.userId == currentUser?.uid.toString()
         }
     }
+
+
 
     Column(
         Modifier.padding(2.dp),
@@ -123,16 +125,16 @@ fun UserList(
 
 @Composable
 fun CompetenceList(
-    listOfCompetence: List<MCompetence>,
+    listOfCompetence: List<MOutcome>,
     navController: NavController
 ){
     CompetenceScrollableComponent(listOfCompetence){
-        navController.navigate(SummaryScreens.CompetenceScreen.name)
+        navController.navigate(SummaryScreens.CompetenceDetailScreen.name + "/${it}")
     }
 }
 
 @Composable
-fun CompetenceScrollableComponent(listOfCompetence: List<MCompetence>, onCardPressed: (String) -> Unit) {
+fun CompetenceScrollableComponent(listOfCompetence: List<MOutcome>, onCardPressed: (String) -> Unit) {
     val scrollState = rememberScrollState()
     Row(modifier = Modifier
         .fillMaxWidth()

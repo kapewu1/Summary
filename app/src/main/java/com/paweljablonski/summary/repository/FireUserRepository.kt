@@ -2,9 +2,7 @@ package com.paweljablonski.summary.repository
 
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
-import com.google.firebase.ktx.Firebase
 import com.paweljablonski.summary.data.DataOrException
-import com.paweljablonski.summary.model.MCompetence
 import com.paweljablonski.summary.model.MUser
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject

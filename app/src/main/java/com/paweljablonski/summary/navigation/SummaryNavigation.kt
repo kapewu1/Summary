@@ -3,9 +3,11 @@ package com.paweljablonski.summary.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.paweljablonski.summary.screens.LoginScreen
 //import com.paweljablonski.summary.screens.LoginScreen
 import com.paweljablonski.summary.screens.SplashScreen
@@ -46,9 +48,21 @@ fun SummaryNavigation(){
             UserScreen(navController = navController)
         }
 
-        composable(SummaryScreens.CompetenceDetailScreen.name){
-            CompetenceDetailScreen(navController = navController)
+        val detailName = SummaryScreens.CompetenceDetailScreen.name
+
+        composable("$detailName/{competenceId}", arguments = listOf(navArgument("competenceId"){
+            type = NavType.StringType
+        })){    backStackEntry ->
+            backStackEntry.arguments?.getString("competenceId").let {
+                CompetenceDetailScreen(navController = navController, competenceId = it.toString())
+            }
         }
+//
+//        composable(SummaryScreens.CompetenceDetailScreen.name){
+//            CompetenceDetailScreen(navController = navController, competenceId = "")
+//        }
+//
+
         composable(SummaryScreens.CompetenceScreen.name){
             CompetenceScreen(navController = navController)
         }
