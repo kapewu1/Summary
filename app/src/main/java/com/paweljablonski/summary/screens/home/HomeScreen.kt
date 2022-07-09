@@ -66,15 +66,6 @@ fun HomeContent(navController: NavController,
             mCompetence.userId == currentUser?.uid.toString()
         }
     }
-//
-//    val listOfCompetence = listOf(
-//        MCompetence("1", "Komunikacja", "Lorem", 61),
-//        MCompetence("2", "Zaangażowanie", "Lorem", 100),
-//        MCompetence("3", "Determinacja", "Lorem", 76),
-//        MCompetence("4", "Programowanie", "Lorem", 66),
-//        MCompetence("5", "Analityczne Myślenie", "Lorem", 82),
-//        MCompetence("6", "Podejmowanie Decyzji", "Lorem", 87)
-//    )
 
     Column(
         Modifier.padding(2.dp),

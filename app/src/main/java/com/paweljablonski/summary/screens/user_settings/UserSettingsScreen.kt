@@ -74,19 +74,7 @@ fun DeleteUser(){
     Button(onClick = { /*TODO*/ }, modifier = Modifier.width(148.dp).height(48.dp)) {
     }
 }
-@Composable
-fun StyledTextField() {
-    var value by remember { mutableStateOf("Hello\nWorld\nInvisible") }
 
-    TextField(
-        value = value,
-        onValueChange = { value = it },
-        label = { Text("Enter text") },
-        maxLines = 2,
-        textStyle = TextStyle(color = Color.Blue, fontWeight = FontWeight.Bold),
-        modifier = Modifier.padding(20.dp)
-    )
-}
 @Composable
 fun OutlinedText(label: String) {
     var text by remember { mutableStateOf("") }
