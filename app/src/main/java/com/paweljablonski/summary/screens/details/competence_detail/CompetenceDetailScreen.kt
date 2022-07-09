@@ -56,11 +56,10 @@ fun CompetenceDetailScreen(
                     if (!viewModel.competenceData.value.data.isNullOrEmpty()){
                         competenceQuery = viewModel.competenceData.value?.data!!.toList()
                             .filter { mCompetence ->
+
                                 mCompetence.competenceId == competenceId
                             }
                     }
-
-                    Log.d("INFO", "Competence list: {${competenceQuery.toString()}}")
 
                     if (competenceQuery.isNotEmpty()){
                         val competence = competenceQuery.first()
@@ -74,12 +73,3 @@ fun CompetenceDetailScreen(
     }
 }
 
-//
-//private fun getCompetenceById(competenceId: String): Map<String, Any> {
-//    var result = emptyMap<String, Any>()
-//    val docRef = FirebaseFirestore.getInstance().collection("competences").document(competenceId)
-//    docRef.get().addOnSuccessListener { documentSnapshot ->
-//        result = documentSnapshot.data!!
-//    }
-//    return result
-//}

@@ -30,3 +30,13 @@ class FireCompetenceRepository @Inject constructor(
         return dataOrException
     }
 }
+
+
+//db.collection("cities")
+//.add(data)
+//.addOnSuccessListener { documentReference ->
+//    Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
+//}
+//.addOnFailureListener { e ->
+//    Log.w(TAG, "Error adding document", e)
+//}
