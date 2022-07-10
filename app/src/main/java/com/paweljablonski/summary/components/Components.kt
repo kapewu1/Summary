@@ -250,7 +250,7 @@ fun CompetenceCard(competence: MOutcome,
         elevation = 6.dp,
         modifier = Modifier
             .padding(16.dp)
-            .clickable { onPressDetails.invoke(competence.name) }
+            .clickable { onPressDetails.invoke(competence.competenceId) }
 //            .clickable { onPressDetails.invoke(competence.name) }
             .widthIn(120.dp)
             .heightIn(120.dp)

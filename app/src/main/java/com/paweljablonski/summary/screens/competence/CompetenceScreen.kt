@@ -101,7 +101,6 @@ fun CompetenceContent(navController: NavController){
                                     collection.document(documentReference.id).update("competenceId", documentReference.id)
                                     navController.navigate(SummaryScreens.HomeScreen.name)
                                 }
-
                         } else{
                             Log.d("TAG","Competence Screen: One of the spacer are blank")
                         }

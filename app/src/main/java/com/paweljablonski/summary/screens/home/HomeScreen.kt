@@ -1,4 +1,5 @@
 package com.paweljablonski.summary.screens.home
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -21,6 +22,7 @@ import com.paweljablonski.summary.components.*
 import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.model.MUser
 import com.paweljablonski.summary.navigation.SummaryScreens
+import com.paweljablonski.summary.screens.details.competence_detail.CompetenceDetailScreen
 
 
 @Composable
@@ -60,11 +62,16 @@ fun HomeContent(navController: NavController,
     }
 
     var listOfCompetence = emptyList<MOutcome>()
+//
+//    if (!viewModel.outcomeData.value.data.isNullOrEmpty()){
+//        listOfCompetence = viewModel.outcomeData.value?.data!!.toList().filter { mOutcome ->
+//            mOutcome.userId == currentUser?.uid.toString()
+//        }
+//    }
 
     if (!viewModel.outcomeData.value.data.isNullOrEmpty()){
-        listOfCompetence = viewModel.outcomeData.value?.data!!.toList().filter { mOutcome ->
-            mOutcome.userId == currentUser?.uid.toString()
-        }
+        listOfCompetence = viewModel.outcomeData.value?.data!!.toList()
+
     }
 
 
@@ -129,6 +136,7 @@ fun CompetenceList(
     navController: NavController
 ){
     CompetenceScrollableComponent(listOfCompetence){
+        Log.d("DETAIL", "it: ${it}")
         navController.navigate(SummaryScreens.CompetenceDetailScreen.name + "/${it}")
     }
 }

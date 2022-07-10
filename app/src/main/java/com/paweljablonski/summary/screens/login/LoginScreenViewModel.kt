@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class LoginScreenViewModel: ViewModel() {
-//    val loadingState = MutableStateFlow(LoadingState.IDLE)
     private val auth: FirebaseAuth = Firebase.auth
 
     private val _loading = MutableLiveData(false)
@@ -39,34 +38,6 @@ class LoginScreenViewModel: ViewModel() {
         }
     }
 
-//    private fun createUser(displayName: String?) {
-//        val userId = auth.currentUser?.uid
-//        val user = MUser(
-//            userId = userId.toString(),
-//            displayName = "sdsd",
-//            avatarUrl = "4274735655cf",
-//            id = null
-//        ).toMap()
-//
-//
-//
-//        Log.d("createUser", "User Created ${user.toString()}")
-
-
-//
-//        FirebaseFirestore.getInstance().collection("users")
-//            .add(user).addOnCompleteListener {
-//                if (it.isSuccessful){
-//
-//                    Log.d("createUser", "User Created SUCCESS}")
-//                }else{
-//
-//                    Log.d("createUser", "User Created FAILED}")
-//                }
-//
-//            }
-
-//    }
 
     private fun createUser(displayName: String?) {
         val userId = auth.currentUser?.uid
@@ -74,8 +45,9 @@ class LoginScreenViewModel: ViewModel() {
         val user = MUser(userId = userId.toString(),
             displayName = displayName.toString(),
             avatarUrl = "",
+            bio = "",
+            isEvaluated = false,
             id = null).toMap()
-
 
         FirebaseFirestore.getInstance().collection("users")
             .add(user)

@@ -11,13 +11,34 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.paweljablonski.summary.components.TitleSection
 import com.paweljablonski.summary.data.DataOrException
 import com.paweljablonski.summary.model.MCompetence
 import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.screens.home.HomeScreenViewModel
+import kotlinx.coroutines.launch
 import kotlin.Exception
+
+//
+//fun signInWithEmailAndPassword(email: String, password: String, home: () -> Unit)
+//        = viewModelScope.launch {
+//    try {
+//        auth.signInWithEmailAndPassword(email, password)
+//            .addOnCompleteListener { task ->
+//                if (task.isSuccessful){
+//                    Log.d("FB", "signInWithEmailAndPassword - SUCCESS ${task.result.toString()}")
+//                    home()
+//                } else {
+//                    Log.d("FB", "signInWithEmailAndPassword - FAILED")
+//                }
+//            }
+//    } catch (ex: java.lang.Exception){
+//        Log.d("FB", "signInWithEmailAndPassword: ${ex.message}")
+//    }
+//}
+
 
 @Composable
 fun CompetenceDetailScreen(
@@ -25,9 +46,9 @@ fun CompetenceDetailScreen(
     competenceId: String,
     viewModel: HomeScreenViewModel = hiltViewModel()
 ){
-
     Scaffold(
     ) {
+
 
         val outcomeInfo = produceState<DataOrException<List<MOutcome>,
                 Boolean,
@@ -49,15 +70,13 @@ fun CompetenceDetailScreen(
                     LinearProgressIndicator()
                     outcomeInfo.loading = false
                 } else{
-                    val outcome = viewModel.outcomeData.value.data
-                    val competenceId = outcome?.get(0)?.competenceId.toString().trim()
-                    var competenceQuery = emptyList<MCompetence>()
 
+                    var competenceQuery = emptyList<MCompetence>()
+                    Log.d("DETAIL", "competenceID: ${competenceId}")
                     if (!viewModel.competenceData.value.data.isNullOrEmpty()){
                         competenceQuery = viewModel.competenceData.value?.data!!.toList()
                             .filter { mCompetence ->
-
-                                mCompetence.competenceId == competenceId
+                                mCompetence.competenceId.trim() == competenceId.trim()
                             }
                     }
 
