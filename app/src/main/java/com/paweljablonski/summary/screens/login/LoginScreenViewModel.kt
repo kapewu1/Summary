@@ -41,13 +41,14 @@ class LoginScreenViewModel: ViewModel() {
 
     private fun createUser(displayName: String?) {
         val userId = auth.currentUser?.uid
-
-        val user = MUser(userId = userId.toString(),
-            displayName = displayName.toString(),
-            avatarUrl = "",
-            bio = "",
-            isEvaluated = false,
-            id = null).toMap()
+        val user = hashMapOf(
+            "displayName" to "test",
+            "avatarUrl" to "test",
+            "bio" to "test",
+            "isEvaluated" to false,
+            "id" to null,
+            "userId" to userId.toString()
+        )
 
         FirebaseFirestore.getInstance().collection("users")
             .add(user)

@@ -22,7 +22,6 @@ import com.paweljablonski.summary.components.*
 import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.model.MUser
 import com.paweljablonski.summary.navigation.SummaryScreens
-import com.paweljablonski.summary.screens.details.competence_detail.CompetenceDetailScreen
 
 
 @Composable
@@ -60,6 +59,8 @@ fun HomeContent(navController: NavController,
     if (!viewModel.userData.value.data.isNullOrEmpty()){
         listOfUsers = viewModel.userData.value?.data!!.toList()
     }
+
+    Log.d("USER", "List of users: ${listOfUsers.toString()}")
 
     var listOfCompetence = emptyList<MOutcome>()
 //
@@ -126,7 +127,8 @@ fun UserList(
     navController: NavController
 ) {
     UserScrollableComponent(listOfUsers){
-        navController.navigate(SummaryScreens.UserScreen.name)
+//        Log.d("USER", "Value of it: $it") // todo: dowiedziec się czemu to gówno daje pusty string
+        navController.navigate(SummaryScreens.UserDetailScreen.name + "/${it}")
     }
 }
 
@@ -136,7 +138,7 @@ fun CompetenceList(
     navController: NavController
 ){
     CompetenceScrollableComponent(listOfCompetence){
-        Log.d("DETAIL", "it: ${it}")
+//        Log.d("USER", "Value of competence: $it")
         navController.navigate(SummaryScreens.CompetenceDetailScreen.name + "/${it}")
     }
 }

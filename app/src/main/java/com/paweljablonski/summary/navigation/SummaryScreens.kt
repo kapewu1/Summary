@@ -7,7 +7,7 @@ enum class SummaryScreens {
     StatsScreen,
     UserSettingsScreen,
     LoginScreen,
-    UserScreen,
+    UserDetailScreen,
     CompetenceDetailScreen,
     CompetenceScreen,
     SurveyScreen
@@ -22,7 +22,7 @@ enum class SummaryScreens {
             StatsScreen.name -> StatsScreen
             LoginScreen.name -> LoginScreen
             UserSettingsScreen.name -> UserSettingsScreen
-            UserScreen.name -> UserScreen
+            UserDetailScreen.name -> UserDetailScreen
             CompetenceDetailScreen.name -> CompetenceDetailScreen
             CompetenceScreen.name -> CompetenceScreen
             SurveyScreen.name -> SurveyScreen

@@ -13,7 +13,7 @@ import com.paweljablonski.summary.screens.LoginScreen
 import com.paweljablonski.summary.screens.SplashScreen
 import com.paweljablonski.summary.screens.competence.CompetenceScreen
 import com.paweljablonski.summary.screens.details.competence_detail.CompetenceDetailScreen
-import com.paweljablonski.summary.screens.details.user.UserScreen
+import com.paweljablonski.summary.screens.details.user.UserDetailScreen
 import com.paweljablonski.summary.screens.home.Home
 import com.paweljablonski.summary.screens.home.HomeScreenViewModel
 import com.paweljablonski.summary.screens.survey.SurveyScreen
@@ -44,24 +44,29 @@ fun SummaryNavigation(){
             Home(navController = navController, homeViewModel)
         }
 
-        composable(SummaryScreens.UserScreen.name){
-            UserScreen(navController = navController)
+
+        val userDetailName = SummaryScreens.UserDetailScreen.name
+
+        composable("$userDetailName/{userId}", arguments = listOf(
+            navArgument("userId"){
+                type = NavType.StringType
+            }
+        )){ backStackEntry ->
+            backStackEntry.arguments?.getString("userId").let{
+                UserDetailScreen(navController = navController, userId = it.toString())
+            }
         }
 
-        val detailName = SummaryScreens.CompetenceDetailScreen.name
 
-        composable("$detailName/{competenceId}", arguments = listOf(navArgument("competenceId"){
+        val competenceDetailName = SummaryScreens.CompetenceDetailScreen.name
+
+        composable("$competenceDetailName/{competenceId}", arguments = listOf(navArgument("competenceId"){
             type = NavType.StringType
         })){    backStackEntry ->
             backStackEntry.arguments?.getString("competenceId").let {
                 CompetenceDetailScreen(navController = navController, competenceId = it.toString())
             }
         }
-//
-//        composable(SummaryScreens.CompetenceDetailScreen.name){
-//            CompetenceDetailScreen(navController = navController, competenceId = "")
-//        }
-//
 
         composable(SummaryScreens.CompetenceScreen.name){
             CompetenceScreen(navController = navController)

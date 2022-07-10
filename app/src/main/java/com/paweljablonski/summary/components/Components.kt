@@ -251,7 +251,6 @@ fun CompetenceCard(competence: MOutcome,
         modifier = Modifier
             .padding(16.dp)
             .clickable { onPressDetails.invoke(competence.competenceId) }
-//            .clickable { onPressDetails.invoke(competence.name) }
             .widthIn(120.dp)
             .heightIn(120.dp)
     ) {
@@ -286,7 +285,6 @@ fun CompetenceCard(competence: MOutcome,
 fun UserCard(user: MUser,
              onPressDetails: (String) -> Unit = {}) {
 
-
     Card(modifier = Modifier
         .width(200.dp)
         .height(290.dp)
@@ -297,14 +295,13 @@ fun UserCard(user: MUser,
         Modifier
             .height(200.dp)
             .padding(16.dp)
-            .clickable { onPressDetails.invoke(user.displayName) },
+            .clickable { onPressDetails.invoke(user.userId)},
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally) {
             CreateImageProfile()
             Divider()
-            Text(text = user.displayName, style = MaterialTheme.typography.h5, color = MaterialTheme.colors.primaryVariant, textAlign = TextAlign.Center)
+            Text(text = user.displayName!!, style = MaterialTheme.typography.h5, color = MaterialTheme.colors.primaryVariant, textAlign = TextAlign.Center)
         }
-
     }
 }
 
