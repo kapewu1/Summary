@@ -3,6 +3,7 @@ package com.paweljablonski.summary.di
 import com.google.firebase.firestore.FirebaseFirestore
 import com.paweljablonski.summary.repository.FireCompetenceRepository
 import com.paweljablonski.summary.repository.FireOutcomeRepository
+import com.paweljablonski.summary.repository.FireQuestionRepository
 import com.paweljablonski.summary.repository.FireUserRepository
 import dagger.Module
 import dagger.Provides
@@ -28,5 +29,10 @@ object AppModule {
     @Provides
     fun provideFireCompetenceRepository()
     = FireCompetenceRepository(queryCompetence = FirebaseFirestore.getInstance().collection("competences"))
+
+    @Singleton
+    @Provides
+    fun provideFireQuestionsRepository()
+    = FireQuestionRepository(queryQuestion = FirebaseFirestore.getInstance().collection("questions"))
 
 }

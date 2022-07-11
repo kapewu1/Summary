@@ -18,26 +18,9 @@ import com.paweljablonski.summary.data.DataOrException
 import com.paweljablonski.summary.model.MCompetence
 import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.screens.home.HomeScreenViewModel
-import kotlinx.coroutines.launch
 import kotlin.Exception
 
-//
-//fun signInWithEmailAndPassword(email: String, password: String, home: () -> Unit)
-//        = viewModelScope.launch {
-//    try {
-//        auth.signInWithEmailAndPassword(email, password)
-//            .addOnCompleteListener { task ->
-//                if (task.isSuccessful){
-//                    Log.d("FB", "signInWithEmailAndPassword - SUCCESS ${task.result.toString()}")
-//                    home()
-//                } else {
-//                    Log.d("FB", "signInWithEmailAndPassword - FAILED")
-//                }
-//            }
-//    } catch (ex: java.lang.Exception){
-//        Log.d("FB", "signInWithEmailAndPassword: ${ex.message}")
-//    }
-//}
+
 
 
 @Composable
@@ -72,7 +55,6 @@ fun CompetenceDetailScreen(
                 } else{
 
                     var competenceQuery = emptyList<MCompetence>()
-                    Log.d("DETAIL", "competenceID: ${competenceId}")
                     if (!viewModel.competenceData.value.data.isNullOrEmpty()){
                         competenceQuery = viewModel.competenceData.value?.data!!.toList()
                             .filter { mCompetence ->

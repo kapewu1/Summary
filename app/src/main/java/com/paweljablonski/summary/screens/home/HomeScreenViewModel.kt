@@ -25,8 +25,6 @@ class HomeScreenViewModel @Inject constructor(
     private val competenceRepository: FireCompetenceRepository
     ):ViewModel(){
 
-//    val competenceId = MutableState<String> = mutableStateOf()
-
     val userData: MutableState<DataOrException<List<MUser>, Boolean, Exception>>
         = mutableStateOf(
             DataOrException(listOf(), true, Exception("")))
