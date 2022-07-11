@@ -1,5 +1,6 @@
 package com.paweljablonski.summary.screens.survey
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,35 +28,57 @@ import androidx.navigation.NavController
 import com.paweljablonski.summary.model.MQuestion
 import com.paweljablonski.summary.utils.Constants
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun SurveyScreen(navController: NavController,
     viewModel: SurveyScreenViewModel = hiltViewModel()
 ){
 
     val questions = viewModel.questionData.value.data?.toMutableList()
-//
+    val questionIndex = remember{
+        mutableStateOf(0)
+    }
+
+    val answers = mutableStateListOf<Map<String, Any>>()
+
+//    val answers = remember{
+//        mutableStateOf<Map<String, Any>>(emptyMap())
+//    }
+
+
     if (viewModel.questionData.value.loading == true){
         Log.d("QUESTION", "Question loading ...")
     }else{
+        val question = try{
+            questions?.get(questionIndex.value)
+        }catch (ex : Exception){
+            null
+        }
 
         if (questions != null){
-            QuestionDisplay(question = questions.first())
-        }
-//        Log.d("QUESTION", "Question stopped.")
-//        questions?.forEach {
-//            Log.d("QUESTION", "Question : $it")
-//        }
-    }
+            QuestionDisplay(question = question!!, questionIndex = questionIndex, viewModel = viewModel, answers = answers){
+                if (questionIndex.value == viewModel.getTotalQuestionCount() - 1){
 
-//    QuestionDisplay()
-//    Questions(viewModel)
+                    answers.forEach {  outCome ->
+                        Log.d("QUESTION", outCome.toString())
+
+                    }
+
+                } else{
+                    questionIndex.value = questionIndex.value + 1
+                }
+            }
+        }
+    }
 
 
 }
 @Composable
 fun QuestionDisplay(
     question: MQuestion,
-//    questionIndex: MutableState<Int>,
+    questionIndex: MutableState<Int>,
+    viewModel: SurveyScreenViewModel,
+    answers: MutableList<Map<String, Any>>,
     onNextClicked: (Int) -> Unit = {}){
 
     val choicesState = remember(question){
@@ -65,6 +88,8 @@ fun QuestionDisplay(
     val answerState = remember(question){
         mutableStateOf<Int?>(null)
     }
+
+
 
     val updateAnswer: (Int) -> Unit = remember(question){
         {
@@ -83,7 +108,7 @@ fun QuestionDisplay(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            QuestionTracker()
+            QuestionTracker(counter = questionIndex.value, outOf = viewModel.getTotalQuestionCount())
             Divider(modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp), color = Constants.mLightGray)
@@ -120,14 +145,40 @@ fun QuestionDisplay(
                     }
                 }
 
-                Button(onClick = {},
+                Button(onClick = {
+
+                    val user = hashMapOf(
+                        "displayName" to "test${questionIndex.value} ",
+                        "avatarUrl" to "test",
+                        "bio" to "test"
+                    )
+
+                    answers.add(user)
+                    onNextClicked(questionIndex.value)
+                },
                     modifier = Modifier
                         .padding(3.dp).align(alignment = Alignment.CenterHorizontally),
                     shape = RoundedCornerShape(34.dp),
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Constants.mLightBlue
                     )){
-                    Text("ds")
+
+
+                    Text(text = buildAnnotatedString {
+                        withStyle(style = ParagraphStyle(textIndent = TextIndent.None)){
+                            withStyle(style = SpanStyle(
+                                color = Constants.mOffWhite,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 17.sp)){
+
+                                if (questionIndex.value != viewModel.getTotalQuestionCount() - 1){
+                                    append("Dalej")
+                                }else{
+                                    append("Zakończ")
+                                }
+                            }
+                        }
+                    }, modifier = Modifier.padding(4.dp))
                 }
             }
         }
@@ -135,7 +186,7 @@ fun QuestionDisplay(
 }
 
 @Composable
-fun QuestionTracker(counter: Int = 10, outOf: Int = 100){
+fun QuestionTracker(counter: Int , outOf: Int){
     Text(text = buildAnnotatedString {
         withStyle(style = ParagraphStyle(textIndent = TextIndent.None)){
             withStyle(style = SpanStyle(
@@ -143,7 +194,7 @@ fun QuestionTracker(counter: Int = 10, outOf: Int = 100){
                 fontWeight = FontWeight.Bold,
                 fontSize = 27.sp)){
 
-                append("Question $counter/")
+                append("Question ${counter + 1}/")
 
                 withStyle(style = SpanStyle(
                     color = Constants.mLightGray,

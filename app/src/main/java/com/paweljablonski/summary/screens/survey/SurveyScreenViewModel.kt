@@ -31,4 +31,10 @@ class SurveyScreenViewModel @Inject constructor(
             if (!questionData.value.data.isNullOrEmpty()) questionData.value.loading = false
         }
     }
+
+    fun getTotalQuestionCount(): Int{
+        return questionData.value.data?.toMutableList()!!.size
+    }
+
+
 }
