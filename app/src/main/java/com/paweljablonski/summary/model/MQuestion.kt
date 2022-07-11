@@ -1,3 +1,7 @@
 package com.paweljablonski.summary.model
 
-class MQuestion: ArrayList<MQuestionItem>()
+data class MQuestion(
+    val question: String = "",
+    val competenceId: String = "",
+    val choices: List<Map<String,Any>> = listOf()
+)

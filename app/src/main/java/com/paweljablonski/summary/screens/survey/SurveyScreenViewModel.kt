@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.paweljablonski.summary.data.DataOrException
-import com.paweljablonski.summary.model.MQuestionItem
+import com.paweljablonski.summary.model.MQuestion
 import com.paweljablonski.summary.repository.FireQuestionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class SurveyScreenViewModel @Inject constructor(
     private val questionRepository: FireQuestionRepository
 ): ViewModel() {
-        val questionData: MutableState<DataOrException<List<MQuestionItem>, Boolean, Exception>> = mutableStateOf(
+        val questionData: MutableState<DataOrException<List<MQuestion>, Boolean, Exception>> = mutableStateOf(
             DataOrException(null, true, Exception(""))
         )
 

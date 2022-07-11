@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -16,13 +17,14 @@ import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.paweljablonski.summary.model.MQuestionItem
+import com.paweljablonski.summary.model.MQuestion
 import com.paweljablonski.summary.utils.Constants
 
 @Composable
@@ -52,7 +54,7 @@ fun SurveyScreen(navController: NavController,
 }
 @Composable
 fun QuestionDisplay(
-    question: MQuestionItem,
+    question: MQuestion,
 //    questionIndex: MutableState<Int>,
     onNextClicked: (Int) -> Unit = {}){
 
@@ -87,35 +89,22 @@ fun QuestionDisplay(
                 .padding(horizontal = 8.dp), color = Constants.mLightGray)
 
             Column {
-                Text(text = "Whats the meaning of all this?",
-                    fontSize = 17.sp,
+                Text(text = question.question,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     lineHeight = 22.sp,
                     color = Constants.mOffWhite,
                     modifier = Modifier
                         .padding(6.dp)
-                        .align(alignment = Alignment.Start)
-                        .fillMaxHeight(0.3f)
+                        .align(alignment = Alignment.CenterHorizontally)
+                        .fillMaxHeight(0.1f)
                     )
 
                 choicesState.forEachIndexed { index, map ->
                     Row(modifier = Modifier
                         .padding(3.dp)
                         .fillMaxWidth()
-                        .border(
-                            width = 4.dp, brush = Brush.linearGradient(
-                                colors = listOf(Constants.mOffDarkPurple, Constants.mOffDarkPurple)
-                            ),
-                            shape = RoundedCornerShape(15.dp)
-                        )
-                        .clip(
-                            RoundedCornerShape(
-                                topStartPercent = 50,
-                                topEndPercent = 50,
-                                bottomEndPercent = 50,
-                                bottomStartPercent = 50
-                            )
-                        )
+
                         .background(Color.Transparent),
                         verticalAlignment = Alignment.CenterVertically) {
                             
@@ -123,10 +112,22 @@ fun QuestionDisplay(
                             updateAnswer(index)
                         },
                             modifier = Modifier
-                                .padding(start = 16.dp))
+                                .padding(start = 16.dp),
+                            colors = RadioButtonDefaults.colors(unselectedColor = Constants.mOffWhite, selectedColor = Constants.mOffWhite)
 
-                        Text(text = map["description"].toString())
+                        )
+                        Text(text = map["description"].toString(), color = Constants.mOffWhite, modifier = Modifier.padding(horizontal = 4.dp), fontSize = 12.sp)
                     }
+                }
+
+                Button(onClick = {},
+                    modifier = Modifier
+                        .padding(3.dp).align(alignment = Alignment.CenterHorizontally),
+                    shape = RoundedCornerShape(34.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Constants.mLightBlue
+                    )){
+                    Text("ds")
                 }
             }
         }
