@@ -192,7 +192,6 @@ fun SummaryAppBar(
                     }
                 }
 
-
                 Spacer(modifier = Modifier.width(150.dp))
             }
         },
@@ -213,9 +212,6 @@ fun SummaryAppBar(
         elevation = 0.dp)
 }
 
-
-
-
 @Composable
 fun FABContent(onTap: () -> Unit){
     FloatingActionButton(
@@ -231,8 +227,6 @@ fun FABContent(onTap: () -> Unit){
     }
 }
 
-
-//@Preview
 @Composable
 fun CompetenceCard(competence: MOutcome,
                    onPressDetails: (String) -> Unit = {}) {
