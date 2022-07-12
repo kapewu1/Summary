@@ -3,22 +3,17 @@ package com.paweljablonski.summary.screens.survey
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -26,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.paweljablonski.summary.model.MQuestion
+import com.paweljablonski.summary.navigation.SummaryScreens
 import com.paweljablonski.summary.utils.Constants
 
 @SuppressLint("UnrememberedMutableState")
@@ -39,11 +35,7 @@ fun SurveyScreen(navController: NavController,
         mutableStateOf(0)
     }
 
-    val answers = mutableStateListOf<Map<String, Any>>()
-
-//    val answers = remember{
-//        mutableStateOf<Map<String, Any>>(emptyMap())
-//    }
+    val answers = viewModel.outcomes
 
 
     if (viewModel.questionData.value.loading == true){
@@ -56,15 +48,12 @@ fun SurveyScreen(navController: NavController,
         }
 
         if (questions != null){
-            QuestionDisplay(question = question!!, questionIndex = questionIndex, viewModel = viewModel, answers = answers){
+            QuestionDisplay(question = question!!, questionIndex = questionIndex, viewModel = viewModel){
                 if (questionIndex.value == viewModel.getTotalQuestionCount() - 1){
+                      viewModel.putOutcomesToFirebase()
 
-                    answers.forEach {  outCome ->
-                        Log.d("QUESTION", outCome.toString())
-
-                    }
-
-                } else{
+                      navController.navigate(SummaryScreens.HomeScreen.name)
+                } else {
                     questionIndex.value = questionIndex.value + 1
                 }
             }
@@ -78,7 +67,6 @@ fun QuestionDisplay(
     question: MQuestion,
     questionIndex: MutableState<Int>,
     viewModel: SurveyScreenViewModel,
-    answers: MutableList<Map<String, Any>>,
     onNextClicked: (Int) -> Unit = {}){
 
     val choicesState = remember(question){
@@ -88,8 +76,6 @@ fun QuestionDisplay(
     val answerState = remember(question){
         mutableStateOf<Int?>(null)
     }
-
-
 
     val updateAnswer: (Int) -> Unit = remember(question){
         {
@@ -144,17 +130,20 @@ fun QuestionDisplay(
                         Text(text = map["description"].toString(), color = Constants.mOffWhite, modifier = Modifier.padding(horizontal = 4.dp), fontSize = 12.sp)
                     }
                 }
-
                 Button(onClick = {
+                    answerState.value?.let {
+                        val choice = choicesState[it]
+                        val outcome = mapOf(
+                            "competenceId" to question.competenceId,
+                            "name" to question.question,
+                            "score" to choice["value"],
+                            "userId" to "j8ywyVvezAC14xl9d4CW" //todo set id from chosen user
+                        )
+                        Log.d("OUTCOME", "Chosen value ${outcome.toList().toString()}")
 
-                    val user = hashMapOf(
-                        "displayName" to "test${questionIndex.value} ",
-                        "avatarUrl" to "test",
-                        "bio" to "test"
-                    )
-
-                    answers.add(user)
-                    onNextClicked(questionIndex.value)
+                        viewModel.addOutcome(outcome as Map<String, Any>)
+                        onNextClicked(questionIndex.value)
+                    }
                 },
                     modifier = Modifier
                         .padding(3.dp).align(alignment = Alignment.CenterHorizontally),
@@ -208,16 +197,3 @@ fun QuestionTracker(counter: Int , outOf: Int){
     modifier = Modifier.padding(20.dp))
 }
 
-//@Composable
-//fun Questions(viewModel: SurveyScreenViewModel){
-//    val questions = viewModel.questionData.value.data?.toMutableList()
-//
-//    if (viewModel.questionData.value.loading == true){
-//        Log.d("QUESTION", "Question loading ...")
-//    }else{
-//        Log.d("QUESTION", "Question stopped.")
-//        questions?.forEach {
-//            Log.d("QUESTION", "Question : $it")
-//        }
-//    }
-//}
