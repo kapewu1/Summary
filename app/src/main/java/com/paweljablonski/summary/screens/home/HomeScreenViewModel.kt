@@ -8,9 +8,7 @@ import com.paweljablonski.summary.data.DataOrException
 import com.paweljablonski.summary.model.MCompetence
 import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.model.MUser
-import com.paweljablonski.summary.repository.FireCompetenceRepository
-import com.paweljablonski.summary.repository.FireOutcomeRepository
-import com.paweljablonski.summary.repository.FireUserRepository
+import com.paweljablonski.summary.repository.FireStoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 
@@ -20,13 +18,8 @@ import kotlin.Exception
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val userRepository: FireUserRepository,
-    private val outcomeRepository: FireOutcomeRepository,
-    private val competenceRepository: FireCompetenceRepository
+    private val repository: FireStoreRepository
     ):ViewModel(){
-
-
-
 
     val userData: MutableState<DataOrException<List<MUser>, Boolean, Exception>>
         = mutableStateOf(
@@ -49,21 +42,22 @@ class HomeScreenViewModel @Inject constructor(
     private fun getAllUsersFromDatabase() {
         viewModelScope.launch {
             userData.value.loading = true
-            userData.value = userRepository.getAllUsersFromDatabase()
+            userData.value = repository.getAllUsersFromDatabase()
             if (!userData.value.data.isNullOrEmpty()) userData.value.loading = false
         }
     }
+
     private fun getAllOutcomesFromDatabase() {
         viewModelScope.launch {
             outcomeData.value.loading = true
-            outcomeData.value = outcomeRepository.getAllOutcomesFromDatabase()
+            outcomeData.value = repository.getAllOutcomesFromDatabase()
             if (!outcomeData.value.data.isNullOrEmpty()) outcomeData.value.loading = false
         }
     }
     private fun getAllCompetenceFromDatabase() {
         viewModelScope.launch {
             competenceData.value.loading = true
-            competenceData.value = competenceRepository.getAllCompetenceFromDatabase()
+            competenceData.value = repository.getAllCompetenceFromDatabase()
             if (!competenceData.value.data.isNullOrEmpty()) competenceData.value.loading = false
         }
     }

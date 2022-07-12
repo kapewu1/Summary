@@ -75,8 +75,6 @@ fun HomeContent(navController: NavController,
 
     }
 
-
-
     Column(
         Modifier.padding(2.dp),
         verticalArrangement = Arrangement.Top

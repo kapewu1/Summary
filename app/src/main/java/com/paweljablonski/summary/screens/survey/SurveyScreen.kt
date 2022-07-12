@@ -141,7 +141,16 @@ fun QuestionDisplay(
                         )
                         Log.d("OUTCOME", "Chosen value ${outcome.toList().toString()}")
 
-                        viewModel.addOutcome(outcome as Map<String, Any>)
+                        viewModel.putCompetenceToFirebase()
+
+//                        viewModel.addOutcome(outcome as Map<String, Any>)
+
+                        //na podstawie outcomów usera utwórz dane do wyświetlenia kompetencji
+
+                        //getAllOutputs()
+                        //createCompetenceResult()
+                        // updateCompetenceResultInFirebase()
+
                         onNextClicked(questionIndex.value)
                     }
                 },

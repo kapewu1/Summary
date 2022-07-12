@@ -1,6 +1,5 @@
 package com.paweljablonski.summary.screens.details.competence_detail
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Scaffold
@@ -11,11 +10,10 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.paweljablonski.summary.components.TitleSection
 import com.paweljablonski.summary.data.DataOrException
 import com.paweljablonski.summary.model.MCompetence
+import com.paweljablonski.summary.model.MCompetenceResult
 import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.screens.home.HomeScreenViewModel
 import kotlin.Exception
@@ -31,7 +29,6 @@ fun CompetenceDetailScreen(
 ){
     Scaffold(
     ) {
-
 
         val outcomeInfo = produceState<DataOrException<List<MOutcome>,
                 Boolean,
@@ -53,7 +50,7 @@ fun CompetenceDetailScreen(
                     LinearProgressIndicator()
                     outcomeInfo.loading = false
                 } else{
-
+                    //weź wszystkie outcomes B
                     var competenceQuery = emptyList<MCompetence>()
                     if (!viewModel.competenceData.value.data.isNullOrEmpty()){
                         competenceQuery = viewModel.competenceData.value?.data!!.toList()
