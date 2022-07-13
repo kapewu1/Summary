@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.paweljablonski.summary.model.MQuestion
 import com.paweljablonski.summary.navigation.SummaryScreens
 import com.paweljablonski.summary.utils.Constants
@@ -35,7 +37,7 @@ fun SurveyScreen(navController: NavController,
         mutableStateOf(0)
     }
 
-    val answers = viewModel.outcomes
+//    val answers = viewModel.outcomes
 
 
     if (viewModel.questionData.value.loading == true){
@@ -51,7 +53,7 @@ fun SurveyScreen(navController: NavController,
             QuestionDisplay(question = question!!, questionIndex = questionIndex, viewModel = viewModel){
                 if (questionIndex.value == viewModel.getTotalQuestionCount() - 1){
                       viewModel.putOutcomesToFirebase()
-
+                      viewModel.putCompetenceToFirebase()
                       navController.navigate(SummaryScreens.HomeScreen.name)
                 } else {
                     questionIndex.value = questionIndex.value + 1
@@ -137,20 +139,10 @@ fun QuestionDisplay(
                             "competenceId" to question.competenceId,
                             "name" to question.question,
                             "score" to choice["value"],
-                            "userId" to "j8ywyVvezAC14xl9d4CW" //todo set id from chosen user
+                            "userId" to Firebase.auth.currentUser?.uid
                         )
-                        Log.d("OUTCOME", "Chosen value ${outcome.toList().toString()}")
 
-                        viewModel.putCompetenceToFirebase()
-
-//                        viewModel.addOutcome(outcome as Map<String, Any>)
-
-                        //na podstawie outcomów usera utwórz dane do wyświetlenia kompetencji
-
-                        //getAllOutputs()
-                        //createCompetenceResult()
-                        // updateCompetenceResultInFirebase()
-
+                        viewModel.addOutcome(outcome as Map<String, Any>)
                         onNextClicked(questionIndex.value)
                     }
                 },

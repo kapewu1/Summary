@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.paweljablonski.summary.components.*
+import com.paweljablonski.summary.model.MCompetenceResult
 import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.model.MUser
 import com.paweljablonski.summary.navigation.SummaryScreens
@@ -62,7 +63,7 @@ fun HomeContent(navController: NavController,
 
     Log.d("USER", "List of users: ${listOfUsers.toString()}")
 
-    var listOfCompetence = emptyList<MOutcome>()
+    var listOfCompetence = emptyList<MCompetenceResult>()
 //
 //    if (!viewModel.outcomeData.value.data.isNullOrEmpty()){
 //        listOfCompetence = viewModel.outcomeData.value?.data!!.toList().filter { mOutcome ->
@@ -70,9 +71,10 @@ fun HomeContent(navController: NavController,
 //        }
 //    }
 
-    if (!viewModel.outcomeData.value.data.isNullOrEmpty()){
-        listOfCompetence = viewModel.outcomeData.value?.data!!.toList()
-
+    if (!viewModel.competenceResultData.value.data.isNullOrEmpty()){
+        listOfCompetence = viewModel.competenceResultData.value?.data!!.toList().filter { mCompetenceResult ->
+            mCompetenceResult.userId.trim() == currentUser?.uid.toString()
+        }
     }
 
     Column(
@@ -132,7 +134,7 @@ fun UserList(
 
 @Composable
 fun CompetenceList(
-    listOfCompetence: List<MOutcome>,
+    listOfCompetence: List<MCompetenceResult>,
     navController: NavController
 ){
     CompetenceScrollableComponent(listOfCompetence){
@@ -142,7 +144,7 @@ fun CompetenceList(
 }
 
 @Composable
-fun CompetenceScrollableComponent(listOfCompetence: List<MOutcome>, onCardPressed: (String) -> Unit) {
+fun CompetenceScrollableComponent(listOfCompetence: List<MCompetenceResult>, onCardPressed: (String) -> Unit) {
     val scrollState = rememberScrollState()
     Row(modifier = Modifier
         .fillMaxWidth()

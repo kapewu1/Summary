@@ -4,8 +4,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.paweljablonski.summary.data.DataOrException
 import com.paweljablonski.summary.model.MCompetence
+import com.paweljablonski.summary.model.MCompetenceResult
 import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.model.MUser
 import com.paweljablonski.summary.repository.FireStoreRepository
@@ -28,16 +31,45 @@ class HomeScreenViewModel @Inject constructor(
         = mutableStateOf(
             DataOrException(listOf(), true, Exception("")))
 
+    val competenceResultData: MutableState<DataOrException<List<MCompetenceResult>, Boolean, Exception>>
+            = mutableStateOf(
+        DataOrException(listOf(), true, Exception("")))
+
     val competenceData: MutableState<DataOrException<List<MCompetence>, Boolean, Exception>>
             = mutableStateOf(
                 DataOrException(listOf(), true, Exception("")))
+
+
 
     init {
         getAllUsersFromDatabase()
         getAllOutcomesFromDatabase()
         getAllCompetenceFromDatabase()
+        getAllCompetenceResultFromDatabase()
     }
 
+//    fun getUserScore(): String{
+//        var score = 0
+//        var size = 0
+//        if (!competenceResultData.value.data.isNullOrEmpty()){
+//            competenceResultData.value?.data!!.toList().filter { mCompetenceResult ->
+//                mCompetenceResult.userId.trim() == Firebase.auth.currentUser?.uid
+//            }.forEach {
+//                score += it.score
+//                size++
+//            }
+//        }
+//        return (score/size).toString()
+//    }
+
+
+    private fun getAllCompetenceResultFromDatabase() {
+        viewModelScope.launch {
+            competenceResultData.value.loading = true
+            competenceResultData.value = repository.getAllCompetenceResultFromDatabase()
+            if (!competenceResultData.value.data.isNullOrEmpty()) competenceResultData.value.loading = false
+        }
+    }
 
     private fun getAllUsersFromDatabase() {
         viewModelScope.launch {

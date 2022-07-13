@@ -6,16 +6,20 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.paweljablonski.summary.data.DataOrException
 import com.paweljablonski.summary.model.MCompetence
 import com.paweljablonski.summary.model.MCompetenceResult
 import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.model.MQuestion
+import com.paweljablonski.summary.navigation.SummaryScreens
 import com.paweljablonski.summary.repository.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.absoluteValue
 
 
 @HiltViewModel
@@ -43,6 +47,10 @@ class SurveyScreenViewModel @Inject constructor(
         val outcomes : List<Map<String, Any>> = _outcomes
 
 
+        private val _results = mutableStateListOf<Map<String, Any>>()
+        val results : List<Map<String, Any>> = _results
+
+
 
 
     init {
@@ -51,10 +59,7 @@ class SurveyScreenViewModel @Inject constructor(
         getAllCompetenceFromDatabase()
         getAllCompetenceResultFromDatabase()
     }
-//
-//    private fun getCompetenceResults(): List<Map<String, Any>>{
-//
-//    }
+
 
     private fun getAllQuestions(){
         viewModelScope.launch {
@@ -87,7 +92,6 @@ class SurveyScreenViewModel @Inject constructor(
     }
 
 
-
     fun putOutcomesToFirebase(){
         outcomes.forEach {  outCome ->
             if (!outCome.isNullOrEmpty()){
@@ -103,18 +107,74 @@ class SurveyScreenViewModel @Inject constructor(
         }
     }
 
+
     fun putCompetenceToFirebase(){
+        if (!competenceData.value.data.isNullOrEmpty()){
+            competenceData.value.data?.toMutableList()?.forEach { mCompetence ->
+                val competenceId = mCompetence.competenceId
+                val userId = Firebase.auth.currentUser?.uid
 
-        if (!competenceResultData.value.data.isNullOrEmpty()){
-        competenceResultData.value.data?.toMutableList()?.forEach { result ->
-                try {
+                if (!competenceResultData.value.data.isNullOrEmpty()){
+                    val results = competenceResultData.value?.data!!.toMutableList().filter { mCompetenceResult ->
+                        mCompetenceResult.competenceId.trim() == competenceId.trim() && mCompetenceResult.userId.trim() == userId
+                    }
+                    if (!results.isNullOrEmpty()){
+                        val result = results.first()
+                        result.score = getCompetenceScore(
+                            competenceId = result.competenceId,
+                            userId = result.userId
+                        )
+                        updateResultToFirebase(result)
 
-                    Log.d("RESULT", "Value of record : ${result.name}")
+                    } else {
 
-                } catch (ex : Exception){
-                    Log.d("RESULT", ex.toString())
+                        val result = MCompetenceResult(
+                            competenceId = competenceId,
+                            docId = "",
+                            name = mCompetence.name,
+                            score = getCompetenceScore(competenceId, userId.toString()),
+                            userId = userId.toString()
+                        )
+                        putResultToFirebase(result)
+                    }
                 }
             }
+        }
+    }
+
+
+
+    private fun getCompetenceScore(competenceId: String, userId: String): Int {
+
+        //todo: brakuje dodanych obiektów
+        var score = 0.0
+        var size = 0
+        if (!outcomeData.value.data.isNullOrEmpty()) {
+            val data = outcomeData.value.data?.toMutableList()?.filter { mOutcome ->
+                mOutcome.competenceId.trim() == competenceId.trim() && mOutcome.userId?.trim() == userId.trim()
+            }?.forEach {
+                Log.d("RESULT", "Score: ${it.score}")
+                score += it.score!!
+                size++
+            }
+        }
+
+        Log.d("RESULT", "Score SIZE: ${size}")
+        return (score / size).toInt()
+    }
+    private fun updateResultToFirebase(mCompetenceResult: MCompetenceResult){
+        FirebaseFirestore.getInstance().collection("competence_result").document(mCompetenceResult.docId)
+            .update(mCompetenceResult.toMap()).addOnSuccessListener {
+                Log.d("RESULT", "Outcome is successfully updated in Firebase")
+        }
+
+    }
+
+    private fun putResultToFirebase(mCompetenceResult: MCompetenceResult){
+        val collection = FirebaseFirestore.getInstance().collection("competence_result")
+        collection
+            .add(mCompetenceResult.toMap()).addOnSuccessListener { documentReference ->
+                collection.document(documentReference.id).update("docId", documentReference.id)
         }
     }
 

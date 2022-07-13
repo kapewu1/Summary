@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.paweljablonski.summary.R
+import com.paweljablonski.summary.model.MCompetenceResult
 import com.paweljablonski.summary.model.MOutcome
 import com.paweljablonski.summary.model.MUser
 import com.paweljablonski.summary.navigation.SummaryScreens
@@ -228,7 +229,7 @@ fun FABContent(onTap: () -> Unit){
 }
 
 @Composable
-fun CompetenceCard(competence: MOutcome,
+fun CompetenceCard(competence: MCompetenceResult,
                    onPressDetails: (String) -> Unit = {}) {
 
     val context = LocalContext.current
